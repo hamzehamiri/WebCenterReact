@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    padding: 15px 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 50px;
+    margin-left: 15px;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.profile {
+    display: flex;
+    gap: 10px;
+}
+
+.profile-btn, .logout-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0056b3;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+}
+
+.profile-btn:hover, .logout-btn:hover {
+    background-color: #003f7f;
+}
+
+.main-content {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.action-btn {
+    padding: 15px 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.action-btn:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+/* استایل اسلایدشو */
+.slideshow-container {
+    position: relative;
+    max-width: 600px;
+    margin: 20px auto;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.slide {
+    display: none;
+    text-align: center;
+}
+
+.slide img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.fade {
+    animation: fade 1s;
+}
+
+@keyframes fade {
+    from { opacity: 0.4; }
+    to { opacity: 1; }
+}
