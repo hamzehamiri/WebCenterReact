@@ -1,10 +1,5 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// Theme state
-interface ThemeState {
-    theme: 'light' | 'dark';
-}
-
 // Auth state
 interface AuthState {
     isAuthenticated: boolean;
@@ -12,32 +7,41 @@ interface AuthState {
     error: string | null;
 }
 
-// Initial states
-const initialThemeState: ThemeState = {
-    theme: 'light',
+const loadThemeState = () => {
+    const storedTheme = localStorage.getItem('theme');
+    return storedTheme ? (storedTheme as 'light' | 'dark') : 'light';
 };
 
-const initialAuthState: AuthState = {
-    isAuthenticated: false,
-    user: null,
-    error: null,
+const saveThemeState = (theme: 'light' | 'dark') => {
+    localStorage.setItem('theme', theme);
 };
+
 
 // Theme slice
 const themeSlice = createSlice({
     name: 'theme',
-    initialState: initialThemeState,
+    initialState: { theme: loadThemeState() },
     reducers: {
         toggleTheme: (state) => {
             state.theme = state.theme === 'light' ? 'dark' : 'light';
+            saveThemeState(state.theme); // Save to localStorage
         },
     },
 });
 
+const saveAuthState = (state: AuthState) => {
+    localStorage.setItem('auth', JSON.stringify(state));
+};
+
+const loadAuthState = () => {
+    const storedState = localStorage.getItem('auth');
+    return storedState ? JSON.parse(storedState) : { isAuthenticated: false, user: null, error: null };
+};
+
 // Auth slice
 const authSlice = createSlice({
     name: 'auth',
-    initialState: initialAuthState,
+    initialState: loadAuthState(),
     reducers: {
         login: (state, action: PayloadAction<{ username: string; password: string }>) => {
             const { username, password } = action.payload;
@@ -45,6 +49,7 @@ const authSlice = createSlice({
                 state.isAuthenticated = true;
                 state.user = username;
                 state.error = null;
+                saveAuthState(state); // Save to localStorage
             } else {
                 state.error = 'Invalid username or password';
             }
@@ -53,6 +58,7 @@ const authSlice = createSlice({
             state.isAuthenticated = false;
             state.user = null;
             state.error = null;
+            saveAuthState(state); // Save to localStorage
         },
         clearError: (state) => {
             state.error = null;

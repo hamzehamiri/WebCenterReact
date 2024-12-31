@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { login, clearError } from './store';
-import { RootState } from './store';
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {clearError, login, RootState} from './store';
+import {Navigate} from "react-router-dom";
 
 const LoginForm: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -9,9 +9,16 @@ const LoginForm: React.FC = () => {
     const dispatch = useDispatch();
     const error = useSelector((state: RootState) => state.auth.error);
 
+    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+
+    // If the user is already authenticated, redirect them to the home page
+    if (isAuthenticated) {
+        return <Navigate to="/"/>;
+    }
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        dispatch(login({ username, password }));
+        dispatch(login({username, password}));
     };
 
     const clearErrorMessage = () => {
@@ -19,9 +26,9 @@ const LoginForm: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{ maxWidth: '300px', margin: 'auto' }}>
+        <form onSubmit={handleSubmit} style={{maxWidth: '300px', margin: 'auto'}}>
             <h2>Login</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p style={{color: 'red'}}>{error}</p>}
             <div>
                 <label htmlFor="username">Username</label>
                 <input
