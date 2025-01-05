@@ -21,6 +21,7 @@ const App: React.FC = () => {
                 {/* Protected Route for HomePage */}
                 <Route element={<ProtectedRoute />}>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/p2" element={<HomePage />} />
                 </Route>
 
                 {/* Login Route */}
